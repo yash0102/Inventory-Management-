@@ -1,10 +1,13 @@
 import express from "express";
 import ProductController from "./src/controllers/product.controller.js";
 import ejs from 'ejs';
+import layouts from 'express-ejs-layouts';
 import path from 'path';
 
 
 const server = express();
+
+server.use(layouts);
 
 // setup view engine settings
 server.set("view engine", "ejs");
