@@ -7,6 +7,9 @@ import path from 'path';
 
 const server = express();
 
+// parse form data
+server.use(express.urlencoded({extended: true}));
+
 server.use(layouts);
 
 // setup view engine settings
