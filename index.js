@@ -1,8 +1,9 @@
 import express from "express";
-import ProductController from "./src/controllers/product.controller.js";
 import ejs from 'ejs';
 import layouts from 'express-ejs-layouts';
 import path from 'path';
+import ProductController from "./src/controllers/product.controller.js";
+import validateProduct from "./src/middlewares/validation.middleware.js";
 
 
 const server = express();
@@ -20,7 +21,7 @@ server.set("views", path.join(path.resolve(), "src", "views"));
 const productController = new ProductController()
 server.get('/', productController.getProducts)
 server.get("/new", productController.getAddForm);
-server.post("/", productController.addNewProduct);
+server.post("/",validateProduct, productController.addNewProduct);
 
 
 server.use(express.static('src/views'))
