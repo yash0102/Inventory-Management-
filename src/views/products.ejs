@@ -6,6 +6,7 @@
             <th scope="col">Description</th>
             <th scope="col">Price</th>
             <th scope="col">Image</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +18,9 @@
                 <td scope="col"><%= product.price %></td>
                 <td>
                     <img src="<%= product.imageUrl %>" />
+                </td>
+                <td>
+                    <a href="/update-product" class="btn btn-warning">Update</a>
                 </td>
             </tr>
         <% }) %>
