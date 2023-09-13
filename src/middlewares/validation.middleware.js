@@ -1,26 +1,28 @@
-const validateProduct = ( req, res, next) => {
-    // validate data
-    const { name, price, imageUrl } = req.body;
-    let errors = [];
-    if (!name || name.trim() == "") {
-    errors.push("Name is required");
-    }
+import { body, validationResult } from "express-validator";
 
-    if (!price || parseFloat(price) < 1) {
-    errors.push("Price must be positive number");
-    }
+const validateProduct = async ( req, res, next) => {
+    // 1. Setup rules for validation.
+    const rules = [
+        body('name').notEmpty().withMessage("Name is required"),
+        body('price').isFloat({gt:0}).withMessage("Price sholud be a positive value"), // gt:0 , means greater than 0
+        body('imageUrl').isURL().withMessage('Invalid url')
+    ];
 
-    try {
-    const validUrl = new URL(imageUrl);
-    } catch (err) {
-    errors.push("URL is invalid");
-    }
+    // 2. run those rules
+        await Promise.all(
+            rules.map((rule)=> rule.run(req))
+        );
 
-    if (errors.length > 0) {
-    return res.render("new-product", {
-        errorMessage: errors[0],
-    });
+    // 3. check if there are any errors after running the rules.
+    var validationErrors = validationResult(req);
+
+    // 4. if errors, return the error message
+    if (!validationErrors.isEmpty()){
+        return res.render('new-product', {
+            errorMessage: validationErrors.array()[0].msg,
+        })
     }
+    next();
 }
 
 export default validateProduct;
