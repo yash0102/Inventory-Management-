@@ -22,7 +22,8 @@ const productController = new ProductController()
 server.get('/', productController.getProducts)
 server.get("/new", productController.getAddForm);
 server.post("/",validateProduct, productController.addNewProduct);
-server.get("/update-product", productController.getUpdateProductView);
+server.get("/update-product/:id", productController.getUpdateProductView);
+server.post("/update-product", productController.postUpdateProduct );
 
 
 server.use(express.static('src/views'))
