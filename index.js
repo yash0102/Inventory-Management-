@@ -24,6 +24,7 @@ server.get("/new", productController.getAddForm);
 server.post("/",validateProduct, productController.addNewProduct);
 server.get("/update-product/:id", productController.getUpdateProductView);
 server.post("/update-product", productController.postUpdateProduct );
+server.get("/delete-product/:id", productController.deleteProduct);
 
 
 server.use(express.static('src/views'))
