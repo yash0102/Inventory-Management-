@@ -8,6 +8,8 @@ import validateProduct from "./src/middlewares/validation.middleware.js";
 
 const server = express();
 
+server.use(express.static("public"));
+
 // parse form data
 server.use(express.urlencoded({extended: true}));
 
@@ -24,10 +26,7 @@ server.get("/new", productController.getAddForm);
 server.post("/",validateProduct, productController.addNewProduct);
 server.get("/update-product/:id", productController.getUpdateProductView);
 server.post("/update-product", productController.postUpdateProduct );
-server.get("/delete-product/:id", productController.deleteProduct);
-
-
-server.use(express.static('src/views'))
+server.post("/delete-product/:id", productController.deleteProduct);
 
 server.listen(3400 , ()=> {
     console.log('Server in running on port 3400');
