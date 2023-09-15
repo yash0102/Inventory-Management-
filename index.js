@@ -4,6 +4,7 @@ import layouts from 'express-ejs-layouts';
 import path from 'path';
 import ProductController from "./src/controllers/product.controller.js";
 import validateProduct from "./src/middlewares/validation.middleware.js";
+import { uploadFile } from "./src/middlewares/file-upload.middleware.js";
 
 
 const server = express();
@@ -23,7 +24,7 @@ server.set("views", path.join(path.resolve(), "src", "views"));
 const productController = new ProductController()
 server.get('/', productController.getProducts)
 server.get("/new", productController.getAddForm);
-server.post("/",validateProduct, productController.addNewProduct);
+server.post("/", uploadFile.single('imageUrl'), validateProduct, productController.addNewProduct);
 server.get("/update-product/:id", productController.getUpdateProductView);
 server.post("/update-product", productController.postUpdateProduct );
 server.post("/delete-product/:id", productController.deleteProduct);
