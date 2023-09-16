@@ -6,6 +6,7 @@ import ProductController from "./src/controllers/product.controller.js";
 import validateProduct from "./src/middlewares/validation.middleware.js";
 import { uploadFile } from "./src/middlewares/file-upload.middleware.js";
 import UserController from "./src/controllers/user.controller.js";
+import validateRegister from "./src/middlewares/register.validation.js";
 
 
 const server = express();
@@ -32,6 +33,9 @@ server.get("/update-product/:id", productController.getUpdateProductView);
 server.post("/update-product", productController.postUpdateProduct );
 server.post("/delete-product/:id", productController.deleteProduct);
 server.get("/register",usersController.getRegister);
+server.post("/register",validateRegister,usersController.postRegister);
+server.get("/login",usersController.getLogin);
+server.post("/login",usersController.postLogin);
 
 server.listen(3400 , ()=> {
     console.log('Server in running on port 3400');
