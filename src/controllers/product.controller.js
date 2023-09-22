@@ -7,12 +7,14 @@ export default class ProductController {
 
         res.render("products", {
             products: products,
+            userEmail: req.session.userEmail,
         });
     }
 
     getAddForm(req, res) {
         return res.render('new-product', {
             errorMessage: null,
+            userEmail: req.session.userEmail,
         });
     }
 
@@ -22,7 +24,7 @@ export default class ProductController {
         const imageUrl = 'images/' + req.file.filename;
         ProductModel.add(name, desc, price, imageUrl);
         let products = ProductModel.get();
-        res.render("products", {products});
+        res.render("products", { products, userEmail: req.session.userEmail });
     }
 
     getUpdateProductView(req, res, next){
@@ -33,6 +35,7 @@ export default class ProductController {
             res.render('update-product',{
                 product: productFound,
                 errorMessage: null,
+                userEmail: req.session.userEmail,
             });
         }else {
             res.status(401).send('Product not found');

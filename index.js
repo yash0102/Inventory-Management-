@@ -44,6 +44,7 @@ server.get("/register",usersController.getRegister);
 server.post("/register",validateRegister,usersController.postRegister);
 server.get("/login",usersController.getLogin);
 server.post("/login",usersController.postLogin);
+server.get("/logout",usersController.logout);
 
 server.listen(3400 , ()=> {
     console.log('Server in running on port 3400');
